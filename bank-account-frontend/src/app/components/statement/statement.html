@@ -1,0 +1,13 @@
+<h2>Relevé de compte</h2>
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Montant</th>
+    <th>Solde</th>
+  </tr>
+  <tr *ngFor="let t of transactions">
+    <td>{{ t.date }}</td>
+    <td>{{ t.amount }}€</td>
+    <td>{{ t.balance }}€</td>
+  </tr>
+</table>
