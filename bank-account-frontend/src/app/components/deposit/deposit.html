@@ -1,4 +1,10 @@
 <h2>Dépôt</h2>
-<input type="number" [(ngModel)]="amount" placeholder="Montant">
+<input type="number"
+       [(ngModel)]="amount"
+       placeholder="Montant"
+       min="0"
+       step="1"
+       (keypress)="validateNumber($event)"
+       (paste)="blockPaste($event)" />
 <button (click)="deposit()">Déposer</button>
 <p>{{ message }}</p>

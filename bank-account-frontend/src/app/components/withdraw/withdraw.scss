@@ -1,0 +1,45 @@
+h2, h3 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+input[type="number"] {
+  padding: 8px;
+  width: 200px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+}
+
+button {
+  padding: 8px 15px;
+  font-size: 1rem;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #a0c8ff;
+    cursor: not-allowed;
+  }
+}
+
+p {
+  margin-top: 15px;
+  color: #555;
+  font-style: italic;
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Transaction } from '../../models/transaction';
-import { Account } from '../../services/account';
+import { AccountService } from '../../services/account';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class Statement implements OnInit {
   transactions: Transaction[] = [];
 
-  constructor(private accountService: Account) {}
+  constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
     this.accountService.getStatement().subscribe(data => {

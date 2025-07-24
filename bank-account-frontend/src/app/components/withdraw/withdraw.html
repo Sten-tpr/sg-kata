@@ -1,4 +1,10 @@
-<h3>Retrait</h3>
-<input type="number" [(ngModel)]="amount" placeholder="Montant" />
+<h2>Retrait</h2>
+<input type="number"
+       [(ngModel)]="amount"
+       placeholder="Montant"
+       min="0"
+       step="1"
+       (keypress)="validateNumber($event)"
+       (paste)="blockPaste($event)" />
 <button (click)="withdraw()">Retirer</button>
 <p>{{ message }}</p>

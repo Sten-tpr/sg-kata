@@ -4,8 +4,8 @@ import { Withdraw } from "./components/withdraw/withdraw";
 import { Statement } from "./components/statement/statement";
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'statement', pathMatch: 'full' },
   { path: 'deposit', component: Deposit },
   { path: 'withdraw', component: Withdraw },
-  { path: 'statement', component: Statement },
-  { path: '', redirectTo: 'statement', pathMatch: 'full' },
+  { path: 'statement', component: Statement }
 ];
