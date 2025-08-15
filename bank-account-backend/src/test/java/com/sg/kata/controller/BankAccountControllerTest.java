@@ -16,9 +16,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -50,8 +52,8 @@ class BankAccountControllerTest {
     @Test
     @WithMockUser
     void deposit_shouldReturnCreatedTransaction() throws Exception {
-        TransactionDto dto = new TransactionDto(1L, LocalDate.now(), 100, 100);
-        when(service.deposit(anyInt())).thenReturn(dto);
+        TransactionDto dto = new TransactionDto(1L, LocalDate.now(), BigDecimal.valueOf(100), BigDecimal.valueOf(100));
+        when(service.deposit(any(BigDecimal.class))).thenReturn(dto);
 
         mockMvc.perform(post("/api/account/deposit")
                         .contentType(MediaType.APPLICATION_JSON)

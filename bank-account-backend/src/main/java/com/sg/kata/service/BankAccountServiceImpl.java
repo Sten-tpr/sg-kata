@@ -7,8 +7,10 @@ import com.sg.kata.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Function;
 
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
@@ -22,33 +24,15 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    @Transactional
-    public TransactionDto deposit(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount must be positive.");
-        }
-
-        int balance = getCurrentBalance();
-        Transaction transaction = new Transaction(LocalDate.now(), amount, balance + amount);
-        Transaction saved = repository.save(transaction);
-        return mapper.toDto(saved);
+    public TransactionDto deposit(BigDecimal amount) {
+        BigDecimal balance = getCurrentBalance();
+        return saveTransaction(amount, balance.add(amount));
     }
 
     @Override
-    @Transactional
-    public TransactionDto withdraw(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount must be positive.");
-        }
-
-        int balance = getCurrentBalance();
-        if (balance < amount) {
-            throw new IllegalStateException("Insufficient funds.");
-        }
-
-        Transaction transaction = new Transaction(LocalDate.now(), -amount, balance - amount);
-        Transaction saved = repository.save(transaction);
-        return mapper.toDto(saved);
+    public TransactionDto withdraw(BigDecimal amount) {
+        BigDecimal balance = getCurrentBalance();
+        return saveTransaction(amount.negate(), balance.subtract(amount));
     }
 
     @Override
@@ -57,9 +41,16 @@ public class BankAccountServiceImpl implements BankAccountService {
         return mapper.toDtos(repository.findAll());
     }
 
-    private int getCurrentBalance() {
+    @Transactional
+    private TransactionDto saveTransaction(BigDecimal amount, BigDecimal balance) {
+        Transaction transaction = new Transaction(LocalDate.now(), amount, balance);
+        Transaction saved = repository.save(transaction);
+        return mapper.toDto(saved);
+    }
+
+    private BigDecimal getCurrentBalance() {
         return repository.findAll().stream()
-                .mapToInt(Transaction::getBalance)
-                .reduce(0, (acc, current) -> current); // prend le dernier solde
+                .map(Transaction::getBalance)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

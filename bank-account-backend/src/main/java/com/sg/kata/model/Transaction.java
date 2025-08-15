@@ -2,6 +2,7 @@ package com.sg.kata.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -13,13 +14,13 @@ public class Transaction {
     private Long id;
 
     private LocalDate date;
-    private int amount;
-    private int balance;
+    private BigDecimal amount;
+    private BigDecimal balance;
 
     public Transaction() {
     }
 
-    public Transaction(LocalDate date, int amount, int balance) {
+    public Transaction(LocalDate date, BigDecimal amount, BigDecimal balance) {
         this.date = date;
         this.amount = amount;
         this.balance = balance;
@@ -33,11 +34,11 @@ public class Transaction {
         return date;
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public int getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
@@ -49,11 +50,11 @@ public class Transaction {
         this.date = date;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 }
